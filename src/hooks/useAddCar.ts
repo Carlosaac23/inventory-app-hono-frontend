@@ -4,54 +4,42 @@ import { toast } from 'sonner';
 
 export function useAddCar() {
   const navigate = useNavigate();
-  const [model, setModel] = useState('');
-  const [brand, setBrand] = useState('');
-  const [color, setColor] = useState('');
-  const [year, setYear] = useState('');
-  const [photo, setPhoto] = useState('');
+  const [loading, setLoading] = useState(false);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    setLoading(true);
+
+    const formData = new FormData(e.currentTarget);
+    const body: any = Object.fromEntries(formData);
 
     try {
-      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/add`, {
+      const URL = `${import.meta.env.VITE_BACKEND_URL_DEV}/add`;
+      const res = await fetch(URL, {
         method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          car_model: model,
-          car_brand: brand,
-          car_color: color,
-          car_year: year,
-          car_photo: photo
-        }),
-        headers: {
-          'Content-Type': 'application/json'
-        }
+          car_model: body.model,
+          car_brand: body.brand,
+          car_color: body.color,
+          car_year: parseInt(body.year) || new Date().getFullYear(),
+          car_photo: body.photo
+        })
       });
-      const { msg } = await res.json();
 
-      setModel('');
-      setBrand('');
-      setColor('');
-      setYear('');
-      setPhoto('');
-      navigate('/');
+      const { msg } = await res.json();
       toast.success(msg);
-    } catch (error) {
+      navigate('/');
+    } catch (error: any) {
       console.error(error);
+      toast.error(error.msg);
+    } finally {
+      setLoading(false);
     }
   }
 
   return {
-    model,
-    setModel,
-    brand,
-    setBrand,
-    color,
-    setColor,
-    year,
-    setYear,
-    photo,
-    setPhoto,
+    loading,
     handleSubmit
   };
 }

@@ -14,7 +14,7 @@ export function useAddCar() {
     const body: any = Object.fromEntries(formData);
 
     try {
-      const URL = `${import.meta.env.VITE_BACKEND_URL_DEV}/add`;
+      const URL = `${import.meta.env.VITE_BACKEND_URL}/add`;
       const res = await fetch(URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

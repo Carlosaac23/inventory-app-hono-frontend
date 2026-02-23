@@ -6,14 +6,16 @@ import { Toaster } from 'sonner';
 
 import '@/index.css';
 import App from '@/App.tsx';
-import AddCar from '@/pages/AddCar';
+import AddCarForm from '@/pages/AddCar';
+import EditCarForm from '@/pages/EditCar';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<App />} />
-        <Route path='/add' element={<AddCar />} />
+        <Route path='/add' element={<AddCarForm />} />
+        <Route path='/:id/edit' element={<EditCarForm />} />
       </Routes>
     </BrowserRouter>
     <Analytics />

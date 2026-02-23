@@ -1,24 +1,35 @@
-import { Link } from 'react-router';
+import { useState } from 'react'
+import reactLogo from './assets/react.svg'
+import viteLogo from '/vite.svg'
+import './App.css'
 
-import type { Car } from '@/types/index';
-
-import Card from '@/components/Card';
-import { useCars } from '@/hooks/useCars';
-
-export default function App() {
-  const { cars, error } = useCars();
-
-  if (error) return <span>Oops!</span>;
+function App() {
+  const [count, setCount] = useState(0)
 
   return (
     <>
-      <h1>Cars</h1>
-      <div className='mx-8 flex gap-4'>
-        {cars?.map((car: Car) => (
-          <Card key={car.car_id} {...car} />
-        ))}
+      <div>
+        <a href="https://vite.dev" target="_blank">
+          <img src={viteLogo} className="logo" alt="Vite logo" />
+        </a>
+        <a href="https://react.dev" target="_blank">
+          <img src={reactLogo} className="logo react" alt="React logo" />
+        </a>
       </div>
-      <Link to='/add'>Add car</Link>
+      <h1>Vite + React</h1>
+      <div className="card">
+        <button onClick={() => setCount((count) => count + 1)}>
+          count is {count}
+        </button>
+        <p>
+          Edit <code>src/App.tsx</code> and save to test HMR
+        </p>
+      </div>
+      <p className="read-the-docs">
+        Click on the Vite and React logos to learn more
+      </p>
     </>
-  );
+  )
 }
+
+export default App

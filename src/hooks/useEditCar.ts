@@ -1,12 +1,28 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router';
 import { useNavigate } from 'react-router';
 import { toast } from 'sonner';
 
-export function useAddCar() {
+import type { Car } from '@/types';
+
+import { getCar } from '@/lib/getCar';
+
+export function useEditCar() {
+  const params = useParams();
   const navigate = useNavigate();
+  const [car, setCar] = useState<Car | null>(null);
   const [loading, setLoading] = useState(false);
 
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  useEffect(() => {
+    const fetchCar = async () => {
+      const carData = await getCar(params.id!);
+      setCar(carData);
+    };
+
+    fetchCar();
+  }, [params.id]);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
 
@@ -14,9 +30,9 @@ export function useAddCar() {
     const body: any = Object.fromEntries(formData);
 
     try {
-      const URL = `${import.meta.env.VITE_BACKEND_URL}/add`;
+      const URL = `${import.meta.env.VITE_BACKEND_URL}/${car?.car_id}/edit`;
       const res = await fetch(URL, {
-        method: 'POST',
+        method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           car_model: body.model,
@@ -31,15 +47,11 @@ export function useAddCar() {
       toast.success(msg);
       navigate('/');
     } catch (error: any) {
-      console.error(error);
-      toast.error(error.msg);
+      toast.error(error.msg || 'Error updating car');
     } finally {
       setLoading(false);
     }
-  }
-
-  return {
-    loading,
-    handleSubmit
   };
+
+  return { car, loading, handleSubmit };
 }

@@ -6,8 +6,7 @@ import { Toaster } from 'sonner';
 
 import '@/index.css';
 import App from '@/App.tsx';
-
-import AddCar from './pages/AddCar';
+import AddCar from '@/pages/AddCar';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

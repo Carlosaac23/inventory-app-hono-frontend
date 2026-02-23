@@ -1,44 +1,24 @@
-import { useEffect, useState } from "react";
+import { Link } from 'react-router';
 
-import type { User } from "./types";
+import type { Car } from '@/types/index';
+
+import Card from '@/components/Card';
+import { useCars } from '@/hooks/useCars';
 
 export default function App() {
-  const [users, setUsers] = useState<User[]>([]);
-  const [error, setError] = useState<string | null>(null);
+  const { cars, error } = useCars();
 
-  useEffect(() => {
-    async function loadUsers() {
-      try {
-        const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/users`);
-        if (!res.ok) {
-          throw new Error(`HTTP ${res.status}`);
-        }
-        const payload = (await res.json()) as { data: User[] };
-        setUsers(payload.data ?? []);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : "Unknown error");
-      }
-    }
-
-    loadUsers();
-  }, []);
+  if (error) return <span>Oops!</span>;
 
   return (
     <>
-      <h1>Users</h1>
-      {error && <p>Error: {error}</p>}
-      <ul>
-        {users.map((user) => (
-          <li key={user.id}>
-            <p>
-              <strong>Full name:</strong> {user.name} {user.surname}
-            </p>
-            <p>
-              <strong>Age:</strong> {user.age}
-            </p>
-          </li>
+      <h1>Cars</h1>
+      <div className='mx-8 flex gap-4'>
+        {cars.map((car: Car) => (
+          <Card key={car.car_id} {...car} />
         ))}
-      </ul>
+      </div>
+      <Link to='/add'>Add car</Link>
     </>
   );
 }

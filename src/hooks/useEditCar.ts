@@ -8,19 +8,19 @@ import type { Car } from '@/types';
 import { getCar } from '@/lib/getCar';
 
 export function useEditCar() {
-  const params = useParams();
+  const { carId } = useParams();
   const navigate = useNavigate();
   const [car, setCar] = useState<Car | null>(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchCar = async () => {
-      const carData = await getCar(params.id!);
+      const carData = await getCar(carId!);
       setCar(carData);
     };
 
     fetchCar();
-  }, [params.id]);
+  }, [carId]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

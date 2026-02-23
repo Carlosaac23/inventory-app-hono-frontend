@@ -14,7 +14,7 @@ export default function App() {
     <>
       <h1>Cars</h1>
       <div className='mx-8 flex gap-4'>
-        {cars.map((car: Car) => (
+        {cars?.map((car: Car) => (
           <Card key={car.car_id} {...car} />
         ))}
       </div>

@@ -6,11 +6,10 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "lint": "eslint .",
     "preview": "vite preview",
     "fmt": "oxfmt",
     "fmt:check": "oxfmt --check",
-    "lint:": "oxlint",
+    "lint": "oxlint",
     "lint:fix": "oxlint --fix"
   },
   "dependencies": {

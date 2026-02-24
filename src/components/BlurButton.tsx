@@ -1,4 +1,4 @@
-import { useBlur } from '@/hooks/useBlur';
+import { useState, useEffect } from 'react';
 
 import { Button } from './ui/button';
 import { Spinner } from './ui/spinner';
@@ -11,7 +11,13 @@ export default function BlurButton({
   staticMessage: string;
   promiseMessage: string;
 }) {
-  const { isBlurring } = useBlur(isLoading);
+  const [isBlurring, setIsBlurring] = useState(false);
+
+  useEffect(() => {
+    setIsBlurring(true);
+    const timer = setTimeout(() => setIsBlurring(false), 50);
+    return () => clearTimeout(timer);
+  }, [isLoading]);
 
   return (
     <>

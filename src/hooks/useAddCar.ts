@@ -29,7 +29,7 @@ export function useAddCar() {
 
       const { msg } = await res.json();
       toast.success(msg);
-      navigate('/');
+      navigate('/cars');
     } catch (error: any) {
       console.error(error);
       toast.error(error.msg);

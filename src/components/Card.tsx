@@ -24,7 +24,7 @@ export default function Card(props: Car) {
         alt={`${car_model} in landscape`}
       />
       <div className='flex gap-2'>
-        <Link to={`/${car_id}/edit`}>Edit</Link>
+        <Link to={`/cars/${car_id}/edit`}>Edit</Link>
         <button
           onClick={() => handleDelete(car_id)}
           disabled={loading}

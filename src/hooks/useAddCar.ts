@@ -4,11 +4,11 @@ import { toast } from 'sonner';
 
 export function useAddCar() {
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setLoading(true);
+    setIsLoading(true);
 
     const formData = new FormData(e.currentTarget);
     const body: any = Object.fromEntries(formData);
@@ -34,12 +34,12 @@ export function useAddCar() {
       console.error(error);
       toast.error(error.msg);
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   }
 
   return {
-    loading,
+    isLoading,
     handleSubmit
   };
 }

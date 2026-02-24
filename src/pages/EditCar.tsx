@@ -1,9 +1,28 @@
+import { useQuery } from '@tanstack/react-query';
+import { ShieldAlert } from 'lucide-react';
+import { useParams } from 'react-router';
+
+import BlurButton from '@/components/BlurButton';
+import InfoDiv from '@/components/InfoDiv';
 import { useEditCar } from '@/hooks/useEditCar';
+import editCarQueryOption from '@/queryOptions/editCarQueryOption';
 
 export default function EditCarForm() {
-  const { car, loading, handleSubmit } = useEditCar();
+  const { carId } = useParams();
+  const { isLoading, handleSubmit } = useEditCar();
+  const {
+    data: car,
+    isPending,
+    isError,
+    error
+  } = useQuery(editCarQueryOption(carId));
 
-  if (!car) return <div>Loading...</div>;
+  if (isPending) return <InfoDiv message='Loading...' isError={false} />;
+  if (isError)
+    return (
+      <InfoDiv message={error.message} isError={true} icon={<ShieldAlert />} />
+    );
+
   const { car_model, car_brand, car_color, car_year, car_photo } = car;
 
   return (
@@ -55,9 +74,11 @@ export default function EditCarForm() {
           defaultValue={car_photo}
         />
 
-        <button className='border' type='submit' disabled={loading}>
-          {loading ? 'Updating...' : 'Update'}
-        </button>
+        <BlurButton
+          isLoading={isLoading}
+          staticMessage='Update'
+          promiseMessage='Updating...'
+        />
 
         <h2>Current photo:</h2>
         <img

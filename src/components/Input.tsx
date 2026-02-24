@@ -1,3 +1,5 @@
+import type { Input } from '@/types';
+
 export default function Input({
   label,
   type,
@@ -6,15 +8,7 @@ export default function Input({
   placeholder,
   required,
   onChange
-}: {
-  label: string;
-  type: string;
-  name: string;
-  id: string;
-  placeholder: string;
-  required?: boolean;
-  onChange?: (e: any) => void;
-}) {
+}: Input) {
   return (
     <>
       <label className='mb-1' htmlFor={id}>

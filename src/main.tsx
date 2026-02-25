@@ -12,7 +12,7 @@ import EditForm from '@/components/Forms/EditForm';
 import MainLayout from '@/layouts/MainLayout';
 import Homepage from '@/pages/Homepage';
 
-const queryClient = new QueryClient();
+export const queryClient = new QueryClient();
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

@@ -26,13 +26,10 @@ export interface InputProps {
   label: string;
   type: string;
   name: Path<FormValues>;
-
   id: string;
   placeholder?: string;
-  defaultValue?: string | number;
   register: UseFormRegister<FormValues>;
   errors: FieldErrors<FormValues>;
-
   rules?: RegisterOptions<FormValues, Path<FormValues>>;
 }
 
@@ -43,5 +40,10 @@ export type InputImagePreviewProps = Pick<
 
 export interface Form {
   children: React.ReactNode;
-  onSubmit: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
+  onSubmit: React.FormEventHandler<HTMLFormElement>;
+}
+
+export interface HeaderButton {
+  text: string;
+  path: string;
 }

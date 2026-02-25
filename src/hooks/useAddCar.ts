@@ -24,6 +24,10 @@ export function useAddCar() {
         })
       });
 
+      if (!res.ok) {
+        throw new Error(`Failed to add car ${res.status}`);
+      }
+
       const { msg } = await res.json();
       toast.success(msg);
       navigate('/cars');

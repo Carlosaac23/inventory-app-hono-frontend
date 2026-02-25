@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { toast } from 'sonner';
+
+import { queryClient } from '@/main';
 export function useDeleteCar() {
   const [isLoading, setIsLoading] = useState(false);
 
@@ -13,7 +15,7 @@ export function useDeleteCar() {
       const res = await fetch(URL, { method: 'DELETE' });
       const { msg } = await res.json();
       toast.success(msg);
-      window.location.reload();
+      queryClient.invalidateQueries({ queryKey: ['cars'] });
     } catch (error: any) {
       toast.error(error.msg);
     } finally {

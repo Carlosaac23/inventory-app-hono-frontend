@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { toast } from 'sonner';
 export function useDeleteCar() {
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleDelete = async (carID: string) => {
     if (!confirm('Are you sure you want to delete this car?')) return;
 
-    setLoading(true);
+    setIsLoading(true);
 
     try {
       const URL = `${import.meta.env.VITE_BACKEND_URL}/${carID}/delete`;
@@ -17,9 +17,9 @@ export function useDeleteCar() {
     } catch (error: any) {
       toast.error(error.msg);
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
-  return { loading, handleDelete };
+  return { isLoading, handleDelete };
 }

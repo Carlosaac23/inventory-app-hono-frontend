@@ -1,17 +1,15 @@
 import type { InputProps } from '@/types';
+
 export default function Input({
   label,
   type,
   name,
   id,
   placeholder,
-  defaultValue,
   register,
   errors,
   rules
 }: InputProps) {
-  console.log(errors);
-
   return (
     <>
       <label className='mb-1 font-semibold' htmlFor={id}>
@@ -23,10 +21,9 @@ export default function Input({
         id={id}
         {...register(`${name}`, rules)}
         placeholder={placeholder}
-        defaultValue={defaultValue}
       />
       {errors[name] && (
-        <p className='text-sm text-red-500'>{errors[name].message}</p>
+        <p className='text-sm text-red-500'>{String(errors[name].message)}</p>
       )}
     </>
   );

@@ -7,6 +7,7 @@ import Form from '@/components/Form';
 import Input from '@/components/Input';
 import PhotoPreviewInput from '@/components/PhotoPreviewInput';
 import { useAddCar } from '@/hooks/useAddCar';
+
 export default function AddCarForm() {
   const { isLoading, addCar } = useAddCar();
   const {
@@ -16,7 +17,7 @@ export default function AddCarForm() {
     formState: { errors }
   } = useForm<FormValues>();
 
-  const photoUrl = watch('photo');
+  const photoUrl = watch('photo', '');
 
   const onSubmit = handleSubmit(async data => {
     await addCar(data);

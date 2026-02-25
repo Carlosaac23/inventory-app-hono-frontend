@@ -22,7 +22,7 @@ export default function BlurButton({
   return (
     <>
       <Button
-        className='mt-5 transition-transform duration-200 ease-out hover:cursor-pointer active:scale-99'
+        className='mt-5 transition-transform duration-200 ease-out active:scale-99'
         type='submit'
       >
         <p

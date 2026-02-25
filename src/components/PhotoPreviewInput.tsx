@@ -1,13 +1,20 @@
 import { SearchX } from 'lucide-react';
 
-import { useImagePreview } from '@/hooks/useImagePreview';
+import type { InputImagePreviewProps } from '@/types';
+
+import { usePhotoPreview } from '@/hooks/usePhotoPreview';
 
 import InfoDiv from './InfoDiv';
 import Input from './Input';
 
-export default function ImagePreviewInput() {
-  const { debouncedImageUrl, hasError, setHasError, handleOnChange } =
-    useImagePreview();
+export default function PhotoPreviewInput({
+  register,
+  errors,
+  rules,
+  photoUrl
+}: InputImagePreviewProps) {
+  const { debouncedImageUrl, hasError, setHasError } =
+    usePhotoPreview(photoUrl);
 
   return (
     <>
@@ -17,7 +24,9 @@ export default function ImagePreviewInput() {
         name='photo'
         id='photo'
         placeholder='Image URL'
-        onChange={handleOnChange}
+        register={register}
+        errors={errors}
+        rules={rules}
       />
       <div>
         <p className='mb-2 font-semibold'>Preview:</p>

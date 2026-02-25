@@ -1,4 +1,4 @@
-import type { Input } from '@/types';
+import type { InputProps } from '@/types';
 
 export default function Input({
   label,
@@ -6,23 +6,25 @@ export default function Input({
   name,
   id,
   placeholder,
-  required,
-  onChange
-}: Input) {
+  register,
+  errors,
+  rules
+}: InputProps) {
   return (
     <>
-      <label className='mb-1' htmlFor={id}>
+      <label className='mb-1 font-semibold' htmlFor={id}>
         {label}
       </label>
       <input
-        className='mb-3 rounded-sm border border-neutral-400 p-2 shadow-sm focus:outline-offset-2 focus:outline-neutral-700 focus:outline-solid'
+        className={`${errors[name] ? 'border-red-400 outline-3 outline-red-200' : 'focus:border-neutral-400 focus:outline-3 focus:outline-neutral-200'} mb-2 rounded-sm border-2 border-neutral-300 p-2 shadow-sm`}
         type={type}
-        name={name}
         id={id}
+        {...register(`${name}`, rules)}
         placeholder={placeholder}
-        required={required}
-        onChange={onChange}
       />
+      {errors[name] && (
+        <p className='text-sm text-red-500'>{String(errors[name].message)}</p>
+      )}
     </>
   );
 }

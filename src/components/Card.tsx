@@ -15,16 +15,16 @@ export default function Card(props: Car) {
       <p className='capitalize'>
         <strong>Color:</strong> {car_color}
       </p>
-      <p>
+      <p className='mb-3'>
         <strong>Year:</strong> {car_year}
       </p>
       <img
-        className='mt-4 h-60 rounded-md object-contain shadow-xs'
+        className='h-40 rounded-md object-contain shadow-xs'
         src={car_photo}
         alt={`${car_model} in landscape`}
       />
       <div className='flex gap-2'>
-        <Link to={`/${car_id}/edit`}>Edit</Link>
+        <Link to={`/cars/${car_id}/edit`}>Edit</Link>
         <button
           onClick={() => handleDelete(car_id)}
           disabled={loading}

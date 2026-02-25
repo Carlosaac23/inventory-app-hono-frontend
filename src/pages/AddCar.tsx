@@ -1,29 +1,56 @@
+import BlurButton from '@/components/BlurButton';
+import Form from '@/components/Form';
+import ImagePreviewInput from '@/components/ImagePreviewInput';
+import Input from '@/components/Input';
 import { useAddCar } from '@/hooks/useAddCar';
 export default function AddCarForm() {
-  const { handleSubmit } = useAddCar();
+  const { isLoading, handleSubmit } = useAddCar();
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor='model'>Model</label>
-        <input className='border' type='text' name='model' id='model' />
+      <h1 className='my-6 text-center text-2xl font-bold'>Add Car</h1>
 
-        <label htmlFor='brand'>Brand</label>
-        <input className='border' type='text' name='brand' id='brand' />
+      <Form onSubmit={handleSubmit}>
+        <Input
+          label='Model'
+          type='text'
+          name='model'
+          id='model'
+          placeholder='Corolla'
+          required={true}
+        />
+        <Input
+          label='Brand'
+          type='text'
+          name='brand'
+          id='brand'
+          placeholder='Toyota'
+          required={true}
+        />
+        <Input
+          label='Color'
+          type='text'
+          name='color'
+          id='color'
+          placeholder='White'
+          required={true}
+        />
+        <Input
+          label='Year'
+          type='number'
+          name='year'
+          id='year'
+          placeholder='2007'
+          required={true}
+        />
+        <ImagePreviewInput />
 
-        <label htmlFor='color'>Color</label>
-        <input className='border' type='text' name='color' id='color' />
-
-        <label htmlFor='year'>Year</label>
-        <input className='border' type='number' name='year' id='year' />
-
-        <label htmlFor='photo'>Photo</label>
-        <input className='border' type='text' name='photo' id='photo' />
-
-        <button className='border' type='submit'>
-          Add
-        </button>
-      </form>
+        <BlurButton
+          isLoading={isLoading}
+          staticMessage='Add'
+          promiseMessage='Adding...'
+        />
+      </Form>
     </>
   );
 }

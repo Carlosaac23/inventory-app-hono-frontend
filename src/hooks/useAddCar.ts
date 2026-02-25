@@ -2,28 +2,25 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { toast } from 'sonner';
 
+import type { FormValues } from '@/types';
+
 export function useAddCar() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
 
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
+  async function addCar(data: FormValues) {
     setIsLoading(true);
-
-    const formData = new FormData(e.currentTarget);
-    const body: any = Object.fromEntries(formData);
-
     try {
       const URL = `${import.meta.env.VITE_BACKEND_URL}/add`;
       const res = await fetch(URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          car_model: body.model,
-          car_brand: body.brand,
-          car_color: body.color,
-          car_year: parseInt(body.year) || new Date().getFullYear(),
-          car_photo: body.photo
+          car_model: data.model,
+          car_brand: data.brand,
+          car_color: data.color,
+          car_year: data.year,
+          car_photo: data.photo
         })
       });
 
@@ -31,8 +28,7 @@ export function useAddCar() {
       toast.success(msg);
       navigate('/cars');
     } catch (error: any) {
-      console.error(error);
-      toast.error(error.msg);
+      toast.error(error?.msg ?? 'Failed to add car');
     } finally {
       setIsLoading(false);
     }
@@ -40,6 +36,6 @@ export function useAddCar() {
 
   return {
     isLoading,
-    handleSubmit
+    addCar
   };
 }

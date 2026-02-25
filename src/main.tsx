@@ -7,9 +7,10 @@ import { Toaster } from 'sonner';
 
 import '@/index.css';
 import Cars from '@/components/Cars';
+import AddForm from '@/components/Forms/AddForm';
+import EditForm from '@/components/Forms/EditForm';
 import MainLayout from '@/layouts/MainLayout';
-import AddCarForm from '@/pages/AddCar';
-import EditCarForm from '@/pages/EditCar';
+import Homepage from '@/pages/Homepage';
 
 const queryClient = new QueryClient();
 
@@ -19,9 +20,10 @@ createRoot(document.getElementById('root')!).render(
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<MainLayout />}>
+            <Route index element={<Homepage />} />
             <Route path='cars' element={<Cars />} />
-            <Route path='add' element={<AddCarForm />} />
-            <Route path='cars/:carId/edit' element={<EditCarForm />} />
+            <Route path='add' element={<AddForm />} />
+            <Route path='cars/:carId/edit' element={<EditForm />} />
           </Route>
         </Routes>
       </BrowserRouter>

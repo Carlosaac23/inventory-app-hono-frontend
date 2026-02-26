@@ -19,12 +19,12 @@ export default function EditForm() {
   } = useQuery(editCarQueryOption(carId));
   const { register, errors, onSubmit, isLoading } = useEditCarForm(car);
 
-  if (!car) return <InfoDiv message='Car does not exist' isError={true} />;
   if (isPending) return <InfoDiv message='Loading...' isError={false} />;
   if (isError)
     return (
       <InfoDiv message={error.message} isError={true} icon={<ShieldAlert />} />
     );
+  if (!car) return <InfoDiv message='Car does not exist' isError={true} />;
 
   const { car_model, car_photo } = car;
 
@@ -43,8 +43,8 @@ export default function EditForm() {
           rules={{
             required: 'Model is required',
             minLength: {
-              value: 2,
-              message: 'Model must be at least 2 characters'
+              value: 3,
+              message: 'Model must be at least 3 characters long'
             }
           }}
         />
@@ -57,6 +57,10 @@ export default function EditForm() {
           errors={errors}
           rules={{
             required: 'Brand is required',
+            minLength: {
+              value: 3,
+              message: 'Brand must be at least 3 characters long'
+            },
             pattern: {
               value: /^[a-zA-Z\s-]+$/,
               message: 'Brand can only contain letters, spaces, and hyphens'
@@ -101,7 +105,7 @@ export default function EditForm() {
 
         <h2 className='mb-2 font-semibold'>Current photo:</h2>
         <img
-          className='h-80 rounded-md object-contain shadow-sm'
+          className='h-80 w-full overflow-hidden rounded-md object-cover shadow-sm'
           src={car_photo}
           alt={`${car_model} in landscape`}
         />

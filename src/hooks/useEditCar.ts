@@ -1,11 +1,15 @@
+import type { UseFormSetError } from 'react-hook-form';
+
 import { useState } from 'react';
-import { useParams } from 'react-router';
 import { useNavigate } from 'react-router';
+import { useParams } from 'react-router';
 import { toast } from 'sonner';
 
 import type { FormValues } from '@/types';
 
-export function useEditCar() {
+import { queryClient } from '@/main';
+
+export function useEditCar(setError: UseFormSetError<FormValues>) {
   const { carId } = useParams();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
@@ -21,20 +25,39 @@ export function useEditCar() {
           car_model: data.model,
           car_brand: data.brand,
           car_color: data.color,
-          car_year: data.year,
+          car_year: Number(data.year),
           car_photo: data.photo
         })
       });
 
       if (!res.ok) {
-        throw new Error(`Failed editing car ${res.status}`);
+        const { errors } = await res.json();
+        errors.forEach((e: any) => {
+          const fieldMap: Record<string, keyof FormValues> = {
+            car_model: 'model',
+            car_brand: 'brand',
+            car_color: 'color',
+            car_year: 'year',
+            car_photo: 'photo'
+          };
+          const fieldName = fieldMap[e.path[0]];
+          setError(fieldName, { message: e.message });
+        });
+        return;
       }
+
+      await Promise.all([
+        queryClient.invalidateQueries({ queryKey: ['cars'] }),
+        queryClient.invalidateQueries({ queryKey: ['car', carId] })
+      ]);
 
       const { msg } = await res.json();
       toast.success(msg);
       navigate('/cars');
-    } catch (error: any) {
-      toast.error(error?.msg ?? 'Error updating car');
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        toast.error(error?.message);
+      }
     } finally {
       setIsLoading(false);
     }

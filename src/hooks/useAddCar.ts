@@ -1,10 +1,12 @@
+import type { UseFormSetError } from 'react-hook-form';
+
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { toast } from 'sonner';
 
 import type { FormValues } from '@/types';
 
-export function useAddCar() {
+export function useAddCar(setError: UseFormSetError<FormValues>) {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -19,13 +21,25 @@ export function useAddCar() {
           car_model: data.model,
           car_brand: data.brand,
           car_color: data.color,
-          car_year: data.year,
+          car_year: Number(data.year),
           car_photo: data.photo
         })
       });
 
       if (!res.ok) {
-        throw new Error(`Failed to add car ${res.status}`);
+        const { errors } = await res.json();
+        errors.forEach((e: any) => {
+          const fieldMap: Record<string, keyof FormValues> = {
+            car_model: 'model',
+            car_brand: 'brand',
+            car_color: 'color',
+            car_year: 'year',
+            car_photo: 'photo'
+          };
+          const fieldName = fieldMap[e.path[0]];
+          setError(fieldName, { message: e.message });
+        });
+        return;
       }
 
       const { msg } = await res.json();

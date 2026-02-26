@@ -9,13 +9,14 @@ import PhotoPreviewInput from '@/components/PhotoPreviewInput';
 import { useAddCar } from '@/hooks/useAddCar';
 
 export default function AddCarForm() {
-  const { isLoading, addCar } = useAddCar();
   const {
     register,
     handleSubmit,
     watch,
-    formState: { errors }
+    formState: { errors },
+    setError
   } = useForm<FormValues>();
+  const { isLoading, addCar } = useAddCar(setError);
 
   const photoUrl = watch('photo', '');
 
@@ -39,8 +40,8 @@ export default function AddCarForm() {
           rules={{
             required: 'Model is required',
             minLength: {
-              value: 2,
-              message: 'Model must be at least 2 characters'
+              value: 3,
+              message: 'Model must be at least 3 characters long'
             }
           }}
         />
@@ -54,6 +55,10 @@ export default function AddCarForm() {
           errors={errors}
           rules={{
             required: 'Brand is required',
+            minLength: {
+              value: 3,
+              message: 'Brand must be at least 3 characters long'
+            },
             pattern: {
               value: /^[a-zA-Z\s-]+$/,
               message: 'Brand can only contain letters, spaces, and hyphens'

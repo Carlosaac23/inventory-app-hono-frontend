@@ -39,7 +39,7 @@ export default function PhotoPreviewInput({
             />
           ) : (
             <img
-              className='mx-auto h-60 rounded-md object-contain shadow-md'
+              className='h-80 w-full rounded-md object-cover shadow-md'
               src={debouncedImageUrl}
               alt=''
               onError={() => setHasError(true)}

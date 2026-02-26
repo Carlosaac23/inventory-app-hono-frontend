@@ -13,13 +13,11 @@ export default function Header() {
 
       <nav className='flex gap-1'>
         {buttons.map((button: HeaderButton) => (
-          <>
-            <Link to={button.path}>
-              <Button className='text-sm md:gap-3 md:text-lg' variant='ghost'>
-                {button.text}
-              </Button>
-            </Link>
-          </>
+          <Link key={button.text} to={button.path}>
+            <Button className='text-sm md:gap-3 md:text-lg' variant='ghost'>
+              {button.text}
+            </Button>
+          </Link>
         ))}
       </nav>
     </header>

@@ -18,7 +18,7 @@ export default function Cars() {
         Cars Inventory
       </h1>
       <div
-        className='mx-auto grid max-w-7xl gap-6 px-4 py-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'
+        className={`${isPending ? 'itemcs-center flex justify-center' : 'mx-auto grid max-w-7xl gap-6 px-4 py-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'}`}
       >
         {isPending ? (
           <Spinner className='mx-auto my-10 size-8 text-neutral-400' />

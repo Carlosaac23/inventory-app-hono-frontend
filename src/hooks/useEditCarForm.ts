@@ -5,13 +5,14 @@ import type { FormValues, Car } from '@/types';
 
 import { useEditCar } from './useEditCar';
 export function useEditCarForm(car?: Car) {
-  const { isLoading, editCar } = useEditCar();
   const {
     register,
     formState: { errors },
     handleSubmit,
-    reset
+    reset,
+    setError
   } = useForm<FormValues>();
+  const { isLoading, editCar } = useEditCar(setError);
 
   useEffect(() => {
     if (!car) return;

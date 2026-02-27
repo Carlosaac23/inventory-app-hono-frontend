@@ -1,12 +1,14 @@
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 
-import type { FormValues } from '@/types';
+import type { FormInput, FormOutput } from '@/types';
 
 import BlurButton from '@/components/BlurButton';
 import Form from '@/components/Form';
 import Input from '@/components/Input';
 import PhotoPreviewInput from '@/components/PhotoPreviewInput';
 import { useAddCar } from '@/hooks/useAddCar';
+import { formValuesSchema } from '@/types';
 
 export default function AddCarForm() {
   const {
@@ -15,12 +17,14 @@ export default function AddCarForm() {
     watch,
     formState: { errors },
     setError
-  } = useForm<FormValues>();
+  } = useForm<FormInput, any, FormOutput>({
+    resolver: zodResolver(formValuesSchema)
+  });
   const { isLoading, addCar } = useAddCar(setError);
 
-  const photoUrl = watch('photo', '');
+  const photoUrl = watch('car_photo', '');
 
-  const onSubmit = handleSubmit(async data => {
+  const onSubmit = handleSubmit(async (data: FormInput) => {
     await addCar(data);
   });
 
@@ -32,72 +36,43 @@ export default function AddCarForm() {
         <Input
           label='Model'
           type='text'
-          name='model'
-          id='model'
+          name='car_model'
+          id='car_model'
           placeholder='Corolla'
           register={register}
           errors={errors}
-          rules={{
-            required: 'Model is required',
-            minLength: {
-              value: 3,
-              message: 'Model must be at least 3 characters long'
-            }
-          }}
         />
         <Input
           label='Brand'
           type='text'
-          name='brand'
-          id='brand'
+          name='car_brand'
+          id='car_brand'
           placeholder='Toyota'
           register={register}
           errors={errors}
-          rules={{
-            required: 'Brand is required',
-            minLength: {
-              value: 3,
-              message: 'Brand must be at least 3 characters long'
-            },
-            pattern: {
-              value: /^[a-zA-Z\s-]+$/,
-              message: 'Brand can only contain letters, spaces, and hyphens'
-            }
-          }}
         />
         <Input
           label='Color'
           type='text'
-          name='color'
-          id='color'
+          name='car_color'
+          id='car_color'
           placeholder='White'
           register={register}
           errors={errors}
-          rules={{ required: 'Color is required' }}
         />
         <Input
           label='Year'
           type='number'
-          name='year'
-          id='year'
+          name='car_year'
+          id='car_year'
           placeholder='2007'
           register={register}
           errors={errors}
-          rules={{
-            required: 'Year is required',
-            valueAsNumber: true,
-            min: { value: 1886, message: 'Year must be 1886 or newer' },
-            max: {
-              value: new Date().getFullYear() + 1,
-              message: 'Years is too far in the future'
-            }
-          }}
         />
 
         <PhotoPreviewInput
           register={register}
           errors={errors}
-          rules={{ required: 'URL is required' }}
           photoUrl={photoUrl}
         />
 

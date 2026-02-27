@@ -41,7 +41,7 @@ export default function Card({
         </Link>
 
         <Button
-          className='flex-1 rounded-lg py-1.5 text-sm font-medium transition duration-75 hover:bg-red-700 disabled:opacity-50'
+          className='flex-1 rounded-lg py-1.5 text-sm font-medium transition bg-red-500 duration-75 hover:bg-red-700 disabled:opacity-50'
           variant='destructive'
           type='button'
           disabled={isLoading}

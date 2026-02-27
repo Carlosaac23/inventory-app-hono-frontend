@@ -10,7 +10,7 @@ export default function Footer() {
         >
           Carlos Acosta
         </a>{' '}
-        {new Date().getFullYear()} Rights Reserved
+        {new Date().getFullYear()} © Rights Reserved
       </p>
     </footer>
   );

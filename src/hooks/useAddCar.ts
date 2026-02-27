@@ -4,13 +4,13 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { toast } from 'sonner';
 
-import type { FormValues } from '@/types';
+import type { FormInput } from '@/types';
 
-export function useAddCar(setError: UseFormSetError<FormValues>) {
+export function useAddCar(setError: UseFormSetError<FormInput>) {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
 
-  async function addCar(data: FormValues) {
+  async function addCar(data: FormInput) {
     setIsLoading(true);
     try {
       const URL = `${import.meta.env.VITE_BACKEND_URL}/add`;
@@ -18,23 +18,23 @@ export function useAddCar(setError: UseFormSetError<FormValues>) {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          car_model: data.model,
-          car_brand: data.brand,
-          car_color: data.color,
-          car_year: Number(data.year),
-          car_photo: data.photo
+          car_model: data.car_model,
+          car_brand: data.car_brand,
+          car_color: data.car_color,
+          car_year: Number(data.car_year),
+          car_photo: data.car_photo
         })
       });
 
       if (!res.ok) {
         const { errors } = await res.json();
         errors.forEach((e: any) => {
-          const fieldMap: Record<string, keyof FormValues> = {
-            car_model: 'model',
-            car_brand: 'brand',
-            car_color: 'color',
-            car_year: 'year',
-            car_photo: 'photo'
+          const fieldMap: Record<string, keyof FormInput> = {
+            car_model: 'car_model',
+            car_brand: 'car_brand',
+            car_color: 'car_color',
+            car_year: 'car_year',
+            car_photo: 'car_photo'
           };
           const fieldName = fieldMap[e.path[0]];
           setError(fieldName, { message: e.message });

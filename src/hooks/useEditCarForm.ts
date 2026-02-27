@@ -1,9 +1,11 @@
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
-import type { FormValues, Car } from '@/types';
+import type { FormInput, FormOutput, Car } from '@/types';
 
-import { useEditCar } from './useEditCar';
+import { useEditCar } from '@/hooks/useEditCar';
+import { formValuesSchema } from '@/types';
 export function useEditCarForm(car?: Car) {
   const {
     register,
@@ -11,18 +13,20 @@ export function useEditCarForm(car?: Car) {
     handleSubmit,
     reset,
     setError
-  } = useForm<FormValues>();
+  } = useForm<FormInput, any, FormOutput>({
+    resolver: zodResolver(formValuesSchema)
+  });
   const { isLoading, editCar } = useEditCar(setError);
 
   useEffect(() => {
     if (!car) return;
 
     reset({
-      model: car.car_model,
-      brand: car.car_brand,
-      color: car.car_color,
-      year: car.car_year,
-      photo: car.car_photo
+      car_model: car.car_model,
+      car_brand: car.car_brand,
+      car_color: car.car_color,
+      car_year: car.car_year,
+      car_photo: car.car_photo
     });
   }, [car, reset]);
 

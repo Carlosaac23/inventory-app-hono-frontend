@@ -1,4 +1,4 @@
-import type { ReactNode, FormEventHandler } from 'react';
+import type { ReactNode, SubmitEventHandler } from 'react';
 import type { UseFormRegister, FieldErrors, Path } from 'react-hook-form';
 
 import { z } from 'zod';
@@ -54,7 +54,7 @@ export interface InputPhotoPreviewProps extends Pick<
 
 export interface Form {
   children: ReactNode;
-  onSubmit: FormEventHandler<HTMLFormElement>;
+  onSubmit: SubmitEventHandler<HTMLFormElement>;
 }
 
 export interface HeaderButton {

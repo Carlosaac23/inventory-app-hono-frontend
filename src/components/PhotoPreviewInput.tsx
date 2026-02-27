@@ -2,10 +2,9 @@ import { SearchX } from 'lucide-react';
 
 import type { InputPhotoPreviewProps } from '@/types';
 
+import InfoDiv from '@/components/InfoDiv';
+import Input from '@/components/Input';
 import { usePhotoPreview } from '@/hooks/usePhotoPreview';
-
-import InfoDiv from './InfoDiv';
-import Input from './Input';
 
 export default function PhotoPreviewInput({
   register,

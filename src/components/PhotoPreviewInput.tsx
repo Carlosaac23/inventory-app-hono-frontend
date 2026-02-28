@@ -3,7 +3,7 @@ import { SearchX } from 'lucide-react';
 import type { InputPhotoPreviewProps } from '@/types';
 
 import InfoDiv from '@/components/InfoDiv';
-import Input from '@/components/Input';
+import { Input } from '@/components/ui/input';
 import { usePhotoPreview } from '@/hooks/usePhotoPreview';
 
 export default function PhotoPreviewInput({
@@ -21,12 +21,11 @@ export default function PhotoPreviewInput({
         type='text'
         name='car_photo'
         id='car_photo'
-        placeholder='Image URL'
+        placeholder='Photo URL'
         register={register}
         errors={errors}
       />
       <div>
-        <p className='mb-2 font-semibold'>Preview:</p>
         {debouncedImageUrl &&
           (hasError ? (
             <InfoDiv
@@ -35,12 +34,15 @@ export default function PhotoPreviewInput({
               icon={<SearchX />}
             />
           ) : (
-            <img
-              className='h-80 w-full rounded-md object-cover shadow-md'
-              src={debouncedImageUrl}
-              alt=''
-              onError={() => setHasError(true)}
-            />
+            <>
+              <p className='mb-2 font-semibold'>Preview:</p>
+              <img
+                className='h-80 w-full rounded-md object-cover shadow-md'
+                src={debouncedImageUrl}
+                alt=''
+                onError={() => setHasError(true)}
+              />
+            </>
           ))}
       </div>
     </>

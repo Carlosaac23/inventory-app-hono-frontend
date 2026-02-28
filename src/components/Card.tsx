@@ -1,7 +1,8 @@
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 
 import type { Car } from '@/types/index';
 
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { useDeleteCar } from '@/hooks/useDeleteCar';
 export default function Card({
@@ -22,6 +23,12 @@ export default function Card({
           src={car_photo}
           alt={`${car_model} in landscape`}
         />
+
+        {car_year === new Date().getFullYear() ? (
+          <Badge className='absolute bottom-42 left-6 bg-green-50 text-green-700 dark:bg-green-950 dark:text-green-300'>
+            Just released
+          </Badge>
+        ) : null}
       </div>
 
       <div className='flex flex-col gap-1 text-sm text-neutral-600'>
@@ -41,7 +48,7 @@ export default function Card({
         </Link>
 
         <Button
-          className='flex-1 rounded-lg py-1.5 text-sm font-medium transition bg-red-500 duration-75 hover:bg-red-700 disabled:opacity-50'
+          className='flex-1 rounded-lg border border-red-300 bg-red-50 py-1.5 text-sm font-medium text-inherit transition duration-75 hover:bg-red-100 disabled:opacity-50'
           variant='destructive'
           type='button'
           disabled={isLoading}

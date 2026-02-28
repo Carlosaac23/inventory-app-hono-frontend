@@ -1,7 +1,7 @@
 import type { UseFormSetError } from 'react-hook-form';
 
 import { useState } from 'react';
-import { useNavigate } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 
 import type { FormInput } from '@/types';

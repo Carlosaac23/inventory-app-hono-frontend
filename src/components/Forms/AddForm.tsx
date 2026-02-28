@@ -3,10 +3,10 @@ import { useForm } from 'react-hook-form';
 
 import type { FormInput, FormOutput } from '@/types';
 
-import BlurButton from '@/components/BlurButton';
+import CustomButton from '@/components/CustomButton';
 import Form from '@/components/Form';
-import Input from '@/components/Input';
 import PhotoPreviewInput from '@/components/PhotoPreviewInput';
+import { Input } from '@/components/ui/input';
 import { useAddCar } from '@/hooks/useAddCar';
 import { formValuesSchema } from '@/types';
 
@@ -76,10 +76,10 @@ export default function AddCarForm() {
           photoUrl={photoUrl}
         />
 
-        <BlurButton
+        <CustomButton
           isLoading={isLoading}
           staticMessage='Add'
-          promiseMessage='Adding...'
+          promiseMessage='Adding'
         />
       </Form>
     </>

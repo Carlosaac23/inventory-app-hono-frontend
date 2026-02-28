@@ -1,11 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
 import { ShieldAlert } from 'lucide-react';
-import { useParams } from 'react-router';
+import { useParams } from 'react-router-dom';
 
-import BlurButton from '@/components/BlurButton';
+import CustomButton from '@/components/CustomButton';
 import Form from '@/components/Form';
 import InfoDiv from '@/components/InfoDiv';
-import Input from '@/components/Input';
+import { Input } from '@/components/ui/input';
 import { useEditCarForm } from '@/hooks/useEditCarForm';
 import editCarQueryOption from '@/queryOptions/editCarQueryOption';
 
@@ -74,17 +74,17 @@ export default function EditForm() {
           errors={errors}
         />
 
-        <h2 className='mb-2 font-semibold'>Current photo:</h2>
+        <h2 className='mb-2 font-medium'>Current photo:</h2>
         <img
           className='h-80 w-full overflow-hidden rounded-md object-cover shadow-sm'
           src={car_photo}
           alt={`${car_model} in landscape`}
         />
 
-        <BlurButton
+        <CustomButton
           isLoading={isLoading}
           staticMessage='Update'
-          promiseMessage='Updating...'
+          promiseMessage='Updating'
         />
       </Form>
     </>

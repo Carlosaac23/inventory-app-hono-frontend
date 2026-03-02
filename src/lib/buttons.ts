@@ -7,9 +7,5 @@ export const buttons: HeaderButton[] = [
   {
     text: 'Cars Inventory',
     path: '/cars'
-  },
-  {
-    text: 'Add Car',
-    path: '/add'
   }
 ];

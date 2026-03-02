@@ -1,11 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
 import { ShieldAlert } from 'lucide-react';
-import { useParams } from 'react-router';
+import { useParams } from 'react-router-dom';
 
-import BlurButton from '@/components/BlurButton';
+import CustomButton from '@/components/CustomButton';
 import Form from '@/components/Form';
 import InfoDiv from '@/components/InfoDiv';
-import Input from '@/components/Input';
+import { Input } from '@/components/ui/input';
 import { useEditCarForm } from '@/hooks/useEditCarForm';
 import editCarQueryOption from '@/queryOptions/editCarQueryOption';
 
@@ -36,84 +36,55 @@ export default function EditForm() {
         <Input
           label='Model'
           type='text'
-          name='model'
-          id='model'
+          name='car_model'
+          id='car_model'
           register={register}
           errors={errors}
-          rules={{
-            required: 'Model is required',
-            minLength: {
-              value: 3,
-              message: 'Model must be at least 3 characters long'
-            }
-          }}
         />
         <Input
           label='Brand'
           type='text'
-          name='brand'
-          id='brand'
+          name='car_brand'
+          id='car_brand'
           register={register}
           errors={errors}
-          rules={{
-            required: 'Brand is required',
-            minLength: {
-              value: 3,
-              message: 'Brand must be at least 3 characters long'
-            },
-            pattern: {
-              value: /^[a-zA-Z\s-]+$/,
-              message: 'Brand can only contain letters, spaces, and hyphens'
-            }
-          }}
         />
         <Input
           label='Color'
           type='text'
-          name='color'
-          id='color'
+          name='car_color'
+          id='car_color'
           register={register}
           errors={errors}
-          rules={{ required: 'Color is required' }}
         />
         <Input
           label='Year'
           type='text'
-          name='year'
-          id='year'
+          name='car_year'
+          id='car_year'
           register={register}
           errors={errors}
-          rules={{
-            required: 'Year is required',
-            valueAsNumber: true,
-            min: { value: 1886, message: 'Year must be 1886 or newer' },
-            max: {
-              value: new Date().getFullYear() + 1,
-              message: 'Years is too far in the future'
-            }
-          }}
         />
         <Input
           label='Photo'
           type='text'
-          name='photo'
-          id='photo'
+          name='car_photo'
+          id='car_photo'
           register={register}
           errors={errors}
-          rules={{ required: 'URL is required' }}
         />
 
-        <h2 className='mb-2 font-semibold'>Current photo:</h2>
+        <h2 className='mb-2 font-medium'>Current photo:</h2>
         <img
           className='h-80 w-full overflow-hidden rounded-md object-cover shadow-sm'
           src={car_photo}
           alt={`${car_model} in landscape`}
         />
 
-        <BlurButton
+        <CustomButton
           isLoading={isLoading}
           staticMessage='Update'
-          promiseMessage='Updating...'
+          promiseMessage='Updating'
         />
       </Form>
     </>

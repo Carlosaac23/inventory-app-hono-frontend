@@ -1,18 +1,16 @@
 import { SearchX } from 'lucide-react';
 
-import type { InputImagePreviewProps } from '@/types';
+import type { InputPhotoPreviewProps } from '@/types';
 
+import InfoDiv from '@/components/InfoDiv';
+import { Input } from '@/components/ui/input';
 import { usePhotoPreview } from '@/hooks/usePhotoPreview';
-
-import InfoDiv from './InfoDiv';
-import Input from './Input';
 
 export default function PhotoPreviewInput({
   register,
   errors,
-  rules,
   photoUrl
-}: InputImagePreviewProps) {
+}: InputPhotoPreviewProps) {
   const { debouncedImageUrl, hasError, setHasError } =
     usePhotoPreview(photoUrl);
 
@@ -21,15 +19,13 @@ export default function PhotoPreviewInput({
       <Input
         label='Photo'
         type='text'
-        name='photo'
-        id='photo'
-        placeholder='Image URL'
+        name='car_photo'
+        id='car_photo'
+        placeholder='Photo URL'
         register={register}
         errors={errors}
-        rules={rules}
       />
       <div>
-        <p className='mb-2 font-semibold'>Preview:</p>
         {debouncedImageUrl &&
           (hasError ? (
             <InfoDiv
@@ -38,12 +34,15 @@ export default function PhotoPreviewInput({
               icon={<SearchX />}
             />
           ) : (
-            <img
-              className='h-80 w-full rounded-md object-cover shadow-md'
-              src={debouncedImageUrl}
-              alt=''
-              onError={() => setHasError(true)}
-            />
+            <>
+              <p className='mb-2 font-semibold'>Preview:</p>
+              <img
+                className='h-80 w-full rounded-md object-cover shadow-md'
+                src={debouncedImageUrl}
+                alt=''
+                onError={() => setHasError(true)}
+              />
+            </>
           ))}
       </div>
     </>

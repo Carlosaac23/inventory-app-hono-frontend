@@ -1,49 +1,64 @@
-import type {
-  UseFormRegister,
-  FieldErrors,
-  Path,
-  RegisterOptions
-} from 'react-hook-form';
+import type { ReactNode, SubmitEventHandler } from 'react';
+import type { UseFormRegister, FieldErrors, Path } from 'react-hook-form';
 
-export interface Car {
-  car_id: string;
-  car_model: string;
-  car_brand: string;
-  car_color: string;
-  car_year: number;
-  car_photo: string;
-}
+import { z } from 'zod';
 
-export interface FormValues {
-  model: string;
-  brand: string;
-  color: string;
-  year: number;
-  photo: string;
-}
+export const carSchema = z.object({
+  car_id: z.uuid(),
+  car_model: z
+    .string()
+    .min(1, 'Model is required')
+    .min(3, 'Model must be at least 3 characters long'),
+  car_brand: z
+    .string()
+    .min(1, 'Brand is required')
+    .min(3, 'Brand must be at least 3 characters long')
+    .regex(
+      /^[a-zA-Z\s-]+$/,
+      'Brand can only contain letters, spaces, and hyphens'
+    ),
+  car_color: z.string().min(1, 'Color is required'),
+  car_year: z.coerce
+    .number()
+    .min(1, 'Years is required')
+    .int('Year must be a whole number')
+    .min(1886, 'Year must be 1886 or newer')
+    .max(new Date().getFullYear() + 1, 'Year is too far in the future'),
+  car_photo: z
+    .string()
+    .min(1, 'Photo URL is required')
+    .pipe(z.url('Please anter a valid URL'))
+});
 
+export const formValuesSchema = carSchema.omit({ car_id: true });
+
+export type Car = z.infer<typeof carSchema>;
+export type FormInput = z.input<typeof formValuesSchema>;
+export type FormOutput = z.output<typeof formValuesSchema>;
 export interface InputProps {
   label: string;
   type: string;
-  name: Path<FormValues>;
+  name: Path<FormInput>;
   id: string;
   placeholder?: string;
-  register: UseFormRegister<FormValues>;
-  errors: FieldErrors<FormValues>;
-  rules?: RegisterOptions<FormValues, Path<FormValues>>;
+  register: UseFormRegister<FormInput>;
+  errors: FieldErrors<FormInput>;
 }
 
-export type InputImagePreviewProps = Pick<
+export interface InputPhotoPreviewProps extends Pick<
   InputProps,
-  'register' | 'errors' | 'rules'
-> & { photoUrl: string };
+  'register' | 'errors'
+> {
+  photoUrl: string;
+}
 
 export interface Form {
-  children: React.ReactNode;
-  onSubmit: React.FormEventHandler<HTMLFormElement>;
+  children: ReactNode;
+  onSubmit: SubmitEventHandler<HTMLFormElement>;
 }
 
 export interface HeaderButton {
   text: string;
   path: string;
+  icon?: ReactNode;
 }

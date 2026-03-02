@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 
-import { Spinner } from './ui/spinner';
+import { Spinner } from '@/components/ui/spinner';
 
 export default function InfoDiv({
   message,

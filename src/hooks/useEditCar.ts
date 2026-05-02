@@ -16,7 +16,7 @@ export function useEditCar(setError: UseFormSetError<FormInput>) {
   async function editCar(data: FormInput) {
     setIsLoading(true);
     try {
-      const URL = `${import.meta.env.VITE_BACKEND_URL}/${carId}/edit`;
+      const URL = `${import.meta.env.VITE_BACKEND_URL}/cars/${carId}/edit`;
       const res = await fetch(URL, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },

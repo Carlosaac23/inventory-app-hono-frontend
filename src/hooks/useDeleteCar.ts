@@ -11,7 +11,7 @@ export function useDeleteCar() {
     setIsLoading(true);
 
     try {
-      const URL = `${import.meta.env.VITE_BACKEND_URL}/${carID}/delete`;
+      const URL = `${import.meta.env.VITE_BACKEND_URL}/cars/${carID}/delete`;
       const res = await fetch(URL, { method: 'DELETE' });
       const { msg } = await res.json();
       toast.success(msg);

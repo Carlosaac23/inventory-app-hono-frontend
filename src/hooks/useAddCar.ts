@@ -13,7 +13,7 @@ export function useAddCar(setError: UseFormSetError<FormInput>) {
   async function addCar(data: FormInput) {
     setIsLoading(true);
     try {
-      const URL = `${import.meta.env.VITE_BACKEND_URL}/add`;
+      const URL = `${import.meta.env.VITE_BACKEND_URL}/cars/add`;
       const res = await fetch(URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
